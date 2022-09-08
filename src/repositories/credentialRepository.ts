@@ -15,3 +15,8 @@ export async function insert (newCredential:TCredentialInsertToDB){
         userId:newCredential.userId
     }})
 }
+
+// export async function selectAll ():Promise<ICredentialDB[]> {
+//     const credentials = await prisma.credentials.findMany()
+//     return credentials
+// }

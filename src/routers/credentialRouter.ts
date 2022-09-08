@@ -7,7 +7,7 @@ import tokenValidation from "../middlewares/tokenValidation";
 const credentialRouter = Router()
 
 credentialRouter.post('/credentials/create',tokenValidation,validateSchema(newCredentialSchema),credentialController.createCredential)
-credentialRouter.get('/credentials')
+credentialRouter.get('/credentials',tokenValidation,credentialController.getAllCredentials)
 credentialRouter.get('/credentials/:credentialId')
 
 export default credentialRouter

@@ -25,7 +25,26 @@ async function verifyTitleInUse (title:string,userId:number) {
 }
 
 function encryptPassword (password:string) {
-    const cryptrKey = process.env.CRYPTR_KEY as string //|| 'secret'
+    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
     const cryptr = new Cryptr(cryptrKey);
     return cryptr.encrypt(password)
+}
+
+export async function getAllCredentials (userId:number) {
+    const credentials = await credentialRepository.findByUserId(userId)
+    const treatedCredentials = credentials.map(c=>({
+        id:c.id,
+        title:c.title,
+        url:c.url,
+        username:c.username,
+        password:decryptPassword(c.password as string)
+    }))
+    return treatedCredentials
+}
+
+
+function decryptPassword (password:string) {
+    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
+    const cryptr = new Cryptr(cryptrKey);
+    return cryptr.decrypt(password)
 }
