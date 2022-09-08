@@ -8,6 +8,6 @@ const annotationRouter = Router()
 
 annotationRouter.post('/annotations', tokenValidation, validateSchema(newAnnotationSchema),annotationController.createAnnotation)
 annotationRouter.get('/annotations',tokenValidation,annotationController.getAllAnnotations)
-annotationRouter.get('/annotations/:annotationId',tokenValidation)
+annotationRouter.get('/annotations/:annotationId',tokenValidation,annotationController.getOneAnnotation)
 
 export default annotationRouter

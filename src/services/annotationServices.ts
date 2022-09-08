@@ -40,3 +40,21 @@ export async function getAllAnnotations (userId:number) {
     }))
     return treatedAnnotations
 }
+
+export async function getOneAnnotation (annotationId:number,userId:number) {
+    const annotation = await userAnnotationExists(annotationId, userId)
+    const treatedAnnotation = {
+        id:annotation.id,
+        title:annotation.title,
+        text:annotation.text
+    }
+    return treatedAnnotation
+}
+
+async function userAnnotationExists (annotationId:number, userId:number) {
+    const annotation = await annotationRepository.findById(annotationId)
+    if(!annotation || annotation.userId !== userId){
+        throw {code:'NotFound', message:'No annotations were found with given id'}
+    }
+    return annotation
+}

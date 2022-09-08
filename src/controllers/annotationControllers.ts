@@ -12,3 +12,10 @@ export async function getAllAnnotations (req: Request, res: Response) {
     const annotations = await annotationService.getAllAnnotations(userId)
     res.status(200).send(annotations)
 }
+
+export async function getOneAnnotation (req: Request, res: Response) {
+    const {userId} = res.locals
+    const {annotationId} = req.params
+    const annotation = await annotationService.getOneAnnotation(Number(annotationId),userId)
+    res.status(200).send(annotation)
+}
