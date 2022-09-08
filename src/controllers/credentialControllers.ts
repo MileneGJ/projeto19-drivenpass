@@ -19,3 +19,10 @@ export async function getOneCredential (req: Request, res: Response) {
     const credential = await credentialService.getOneCredential(Number(credentialId),userId)
     res.status(200).send(credential)
 }
+
+export async function deleteOneCredential (req: Request, res:Response) {
+    const {userId} = res.locals
+    const {credentialId} = req.params
+    await credentialService.deleteCredential(Number(credentialId), userId)
+    res.sendStatus(204)
+}

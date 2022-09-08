@@ -68,3 +68,8 @@ async function userCredentialExists (credentialId:number, userId:number) {
     }
     return credential
 }
+
+export async function deleteCredential (credentialId:number, userId:number) {
+    await userCredentialExists(credentialId,userId)
+    await credentialRepository.deleteOne(credentialId)
+}
