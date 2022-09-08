@@ -6,6 +6,10 @@ export interface INewUserDB {
     createdAt:Date;
 }
 
-export type INewUserBody = Omit<INewUserDB, "id" | "createdAt">
+export type TNewUserBody = Omit<INewUserDB, "id" | "createdAt">
 
-export type ILoginBody = Omit<INewUserBody, "name">
+export type TLoginBody = Omit<TNewUserBody, "name">
+
+export interface IUserToken {
+    id:number;
+} 
