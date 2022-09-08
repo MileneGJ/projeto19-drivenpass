@@ -8,6 +8,6 @@ const credentialRouter = Router()
 
 credentialRouter.post('/credentials/create',tokenValidation,validateSchema(newCredentialSchema),credentialController.createCredential)
 credentialRouter.get('/credentials',tokenValidation,credentialController.getAllCredentials)
-credentialRouter.get('/credentials/:credentialId')
+credentialRouter.get('/credentials/:credentialId',tokenValidation,credentialController.getOneCredential)
 
 export default credentialRouter

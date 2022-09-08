@@ -7,7 +7,7 @@ export default function tokenValidation (req: Request, res: Response, next: Next
     const token = authorization?.replace('Bearer ','')
     const secret = process.env.TOKEN_SECRET || 'secret'
     const id = jwt.verify(token as string,secret,jwtHandler as any)
-    res.locals.id = id
+    res.locals.userId = id
     next()
 }
 

@@ -48,3 +48,23 @@ function decryptPassword (password:string) {
     const cryptr = new Cryptr(cryptrKey);
     return cryptr.decrypt(password)
 }
+
+export async function getOneCredential (credentialId:number,userId:number) {
+    const credential = await userCredentialExists(credentialId, userId)
+    const treatedCredential = {
+        id:credential.id,
+        title:credential.title,
+        url:credential.url,
+        username:credential.username,
+        password:decryptPassword(credential.password as string)
+    }
+    return treatedCredential
+}
+
+async function userCredentialExists (credentialId:number, userId:number) {
+    const credential = await credentialRepository.findById(credentialId)
+    if(!credential || credential.userId !== userId){
+        throw {code:'NotFound', message:'No credentials were found with given id'}
+    }
+    return credential
+}

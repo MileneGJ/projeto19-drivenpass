@@ -6,6 +6,11 @@ export async function findByUserId (userId:number):Promise<ICredentialDB[]> {
     return credentials
 }
 
+export async function findById (id:number):Promise<ICredentialDB> {
+    const credential = await prisma.credentials.findUnique({where:{id}})
+    return credential as ICredentialDB
+}
+
 export async function insert (newCredential:TCredentialInsertToDB){
     await prisma.credentials.create({data:{
         title:newCredential.title,
@@ -16,7 +21,3 @@ export async function insert (newCredential:TCredentialInsertToDB){
     }})
 }
 
-// export async function selectAll ():Promise<ICredentialDB[]> {
-//     const credentials = await prisma.credentials.findMany()
-//     return credentials
-// }
