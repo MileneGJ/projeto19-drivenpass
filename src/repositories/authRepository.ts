@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { INewUserBody } from "../typeModels/authInterfaces";
+import { INewUserBody, INewUserDB } from "../typeModels/authInterfaces";
 
 export async function insert (userData:INewUserBody) {
     await prisma.users.create({data:{
@@ -9,6 +9,7 @@ export async function insert (userData:INewUserBody) {
     }})
 }
 
-export async function findByEmail (email:string) {
-    return await prisma.users.findMany({where:{email}})
+export async function findByEmail (email:string):Promise<INewUserDB> {
+    const user = await prisma.users.findMany({where:{email}})
+    return user[0]
 }
