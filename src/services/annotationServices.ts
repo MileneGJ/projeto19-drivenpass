@@ -30,3 +30,13 @@ function validateContent(annotation:TAnnotationBody) {
         throw {code:'InvalidInput', message:'Annotation text must have 1000 characters or less'}
     }
 }
+
+export async function getAllAnnotations (userId:number) {
+    const annotations = await annotationRepository.findByUserId(userId)
+    const treatedAnnotations = annotations.map(a=>({
+        id:a.id,
+        title:a.title,
+        text:a.text
+    }))
+    return treatedAnnotations
+}

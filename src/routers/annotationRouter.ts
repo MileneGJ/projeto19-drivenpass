@@ -7,5 +7,7 @@ import * as annotationController from '../controllers/annotationControllers'
 const annotationRouter = Router()
 
 annotationRouter.post('/annotations', tokenValidation, validateSchema(newAnnotationSchema),annotationController.createAnnotation)
+annotationRouter.get('/annotations',tokenValidation,annotationController.getAllAnnotations)
+annotationRouter.get('/annotations/:annotationId',tokenValidation)
 
 export default annotationRouter
