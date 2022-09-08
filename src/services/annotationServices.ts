@@ -58,3 +58,8 @@ async function userAnnotationExists (annotationId:number, userId:number) {
     }
     return annotation
 }
+
+export async function deleteAnnotation (annotationId:number, userId:number) {
+    await userAnnotationExists(annotationId, userId)
+    await annotationRepository.deleteOne(annotationId)
+}

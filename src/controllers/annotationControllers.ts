@@ -19,3 +19,10 @@ export async function getOneAnnotation (req: Request, res: Response) {
     const annotation = await annotationService.getOneAnnotation(Number(annotationId),userId)
     res.status(200).send(annotation)
 }
+
+export async function deleteOneAnnotation (req: Request, res:Response) {
+    const {userId} = res.locals
+    const {annotationId} = req.params
+    await annotationService.deleteAnnotation(Number(annotationId), userId)
+    res.sendStatus(204)
+}
