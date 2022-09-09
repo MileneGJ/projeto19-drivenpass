@@ -34,6 +34,19 @@ export async function getAllDocuments (userId:number) {
 }
 
 export async function getOneDocument (documentId:number, userId:number) {
-    const document = await documentRepository.findByIdandUserId(documentId,userId)
+    const document = await userDocumentExists(documentId,userId)
     return document
+}
+
+async function userDocumentExists (documentId:number, userId:number) {
+    const document = await documentRepository.findByIdandUserId(documentId,userId)
+    if(!document) {
+        throw {code:'NotFound', message:'No documents were found with given id'}
+    }
+    return document
+}
+
+export async function deleteDocument (documentId:number, userId:number) {
+    await userDocumentExists(documentId,userId)
+    await documentRepository.deleteOne(documentId)
 }

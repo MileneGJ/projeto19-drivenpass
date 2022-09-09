@@ -19,3 +19,10 @@ export async function getOneDocument (req: Request, res:Response) {
     const document = await documentService.getOneDocument(Number(documentId),userId)
     res.status(200).send(document)
 }
+
+export async function deleteOneDocument (req: Request, res:Response) {
+    const {userId} = res.locals
+    const {documentId} = req.params
+    await documentService.deleteDocument(Number(documentId),userId)
+    res.sendStatus(204)
+}

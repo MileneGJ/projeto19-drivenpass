@@ -41,3 +41,7 @@ export async function findByIdandUserId (id:number, userId:number):Promise<TDocu
 export async function insert(document:TDocumentInsertDB) {
     await prisma.documents.create({data:{...document}})
 }
+
+export async function deleteOne (id:number) {
+    await prisma.documents.delete({where:{id}})
+}
