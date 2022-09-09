@@ -10,3 +10,11 @@ export async function addNewWifi (wifi:TWifiBody, userId: number) {
     await wifiRepository.insert(treatedWifi)
 }
 
+export async function getAllWifis(userId:number) {
+    const wifis = await wifiRepository.findByUserId(userId)
+    const treatedWifis = wifis.map(w=>{
+        w.password = cryptrUtils.decryptString(w.password)
+        return w
+    })
+    return treatedWifis
+}

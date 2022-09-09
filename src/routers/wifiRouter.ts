@@ -7,5 +7,6 @@ import { newWifiSchema } from "../schemas/wifiSchemas";
 const wifiRouter = Router()
 
 wifiRouter.post('/wifis',tokenValidation,validateSchema(newWifiSchema),wifiController.createWifi)
+wifiRouter.get('/wifis',tokenValidation,wifiController.getAllWifis)
 
 export default wifiRouter
