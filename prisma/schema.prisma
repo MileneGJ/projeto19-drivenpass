@@ -55,12 +55,18 @@ model Cards {
   expirationDate String
   password       String
   isVirtual      Boolean
-  type           String
+  type           Type
   user           Users     @relation(fields: [userId], references: [id])
   userId         Int
   createdAt      DateTime @default(now())
 
   @@unique([title,userId])
+}
+
+enum Type {
+  credit
+  debit
+  both
 }
 
 model Wifis {

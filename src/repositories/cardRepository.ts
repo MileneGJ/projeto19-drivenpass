@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { ICardDB, TCardInsertToDB } from "../typeModels/cardInterfaces";
+import { ICardDB, TCardInsertToDB, TCardReturnDB } from "../typeModels/cardInterfaces";
 
 export async function insert (card:TCardInsertToDB) {
     await prisma.cards.create({data:{...card}})
@@ -27,4 +27,21 @@ export async function findByTitleAndUserId (title:string, userId:number):Promise
         }
     })
     return card as ICardDB
+}
+
+export async function findByUserId (userId:number):Promise<TCardReturnDB[]> {
+    const cards = await prisma.cards.findMany({
+        where:{userId},
+        select:{
+            id:true,
+            title:true,
+            number:true,
+            cardholderName:true,
+            securityCode:true,
+            expirationDate:true,
+            password:true,
+            isVirtual:true,
+            type:true
+        }})
+    return cards
 }

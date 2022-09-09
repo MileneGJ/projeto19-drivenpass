@@ -60,20 +60,30 @@ function validateExpirationDate(date:string){
 
 function formatCardholderName(name:string) {
     const separateNames = name.split(" ")
-    const regex = /^d?[aeiou]{1}s?$/
+    const regex = /^d[aeiou]{1}s?$/
     let formattedName = []
     for (let i = 0; i < separateNames.length; i++) {
         if (i === 0 || i === separateNames.length - 1) {
             formattedName.push(separateNames[i].toUpperCase())
-        } else if (!regex.test(separateNames[i])) {
+        } else if (!regex.test(separateNames[i].toLowerCase())&&separateNames[i]!=="e") {
             formattedName.push(separateNames[i][0].toUpperCase())
         }
     }
     return formattedName.join(" ")
 }
 
+export async function getAllCards (userId:number) {
+    const cards = await cardRepository.findByUserId(userId)
+    const treatedCards = cards.map(c=>{
+        c.password = decryptString(c.password);
+        c.securityCode = decryptString(c.securityCode);
+        return c
+    })
+    return treatedCards
+}
+
 function decryptString(password: string): string {
     const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
     const cryptr = new Cryptr(cryptrKey);
-    return cryptr.encrypt(password)
+    return cryptr.decrypt(password)
 }

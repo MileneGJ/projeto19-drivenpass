@@ -7,5 +7,6 @@ import * as cardController from '../controllers/cardControllers'
 const cardRouter = Router()
 
 cardRouter.post('/cards',tokenValidation,validateSchema(newCardSchema),cardController.createCard)
+cardRouter.get('/cards',tokenValidation,cardController.getAllCards)
 
 export default cardRouter

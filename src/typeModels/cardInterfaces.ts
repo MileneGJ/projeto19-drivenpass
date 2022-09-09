@@ -20,3 +20,5 @@ export interface ICardDB {
 export type TCardBody = Omit<ICardDB, 'id' | 'createdAt' | 'userId'> 
 
 export type TCardInsertToDB = Omit<ICardDB, 'id' | 'createdAt'> 
+
+export type TCardReturnDB = Omit<ICardDB, 'userId' | 'createdAt'>

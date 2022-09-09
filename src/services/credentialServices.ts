@@ -28,6 +28,7 @@ export async function getAllCredentials (userId:number) {
     const credentials = await credentialRepository.findByUserId(userId)
     const treatedCredentials = credentials.map(c=>{
         c.password = decryptPassword(c.password)
+        return c
     })
     return treatedCredentials
 }
