@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
-import { IUserToken } from '../typeModels/authInterfaces';
+import { IUserToken } from '../typeModels/authTypes';
 
 export default function tokenValidation (req: Request, res: Response, next: NextFunction) {
     const {authorization} = req.headers

@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { TNewUserBody } from '../typeModels/authInterfaces';
+import { TNewUserBody } from '../typeModels/authTypes';
 
 export const newUserSchema = joi.object<TNewUserBody>({
     name: joi.string().required(),

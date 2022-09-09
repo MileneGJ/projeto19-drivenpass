@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { CustomError } from "../typeModels/generalInterfaces";
+import { CustomError } from "../typeModels/generalTypes";
 
 export default function errorHandler(error: CustomError, req: Request, res: Response, next: NextFunction) {
     switch (error.code) {

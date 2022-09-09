@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import JoiDateFactory from '@joi/date';
-import { TCardBody } from '../typeModels/cardInterfaces';
 
 const joi = Joi.extend(JoiDateFactory)
 

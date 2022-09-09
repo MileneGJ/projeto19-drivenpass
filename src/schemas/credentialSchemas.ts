@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { TCredentialBody } from '../typeModels/credentialInterfaces';
+import { TCredentialBody } from '../typeModels/credentialTypes';
 
 export const newCredentialSchema = joi.object<TCredentialBody>({
     title: joi.string().required(),

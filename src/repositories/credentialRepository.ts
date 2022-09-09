@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { ICredentialDB, TCredentialInsertToDB, TCredentialReturnDB } from "../typeModels/credentialInterfaces";
+import { ICredentialDB, TCredentialInsertToDB, TCredentialReturnDB } from "../typeModels/credentialTypes";
 
 export async function findByUserId (userId:number):Promise<TCredentialReturnDB[]> {
     const credentials = await prisma.credentials.findMany({

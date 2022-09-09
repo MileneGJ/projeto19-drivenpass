@@ -1,11 +1,11 @@
-import { TCardBody } from "../typeModels/cardInterfaces";
+import { TCardBody } from "../typeModels/cardTypes";
 import * as cardRepository from '../repositories/cardRepository'
 import * as userService from '../services/authServices'
-import Cryptr from "cryptr";
+import cryptrUtils from '../utils/cryptrUtils'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-export async function addCard(card: TCardBody, userId: number) {
+export async function addNewCard(card: TCardBody, userId: number) {
     await userService.verifyUserExists(userId)
     await verifyTitleInUse(card.title, userId)
 
@@ -15,8 +15,8 @@ export async function addCard(card: TCardBody, userId: number) {
 
     const treatedCard = { ...card, userId }
     treatedCard.cardholderName = formatCardholderName(card.cardholderName)
-    treatedCard.password = encryptString(treatedCard.password)
-    treatedCard.securityCode = encryptString(treatedCard.securityCode)
+    treatedCard.password = cryptrUtils.encryptString(treatedCard.password)
+    treatedCard.securityCode = cryptrUtils.encryptString(treatedCard.securityCode)
 
     await cardRepository.insert(treatedCard)
 }
@@ -28,11 +28,7 @@ async function verifyTitleInUse(title: string, userId: number) {
     }
 }
 
-function encryptString(password: string): string {
-    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
-    const cryptr = new Cryptr(cryptrKey);
-    return cryptr.encrypt(password)
-}
+
 
 function validateCardNumber(number: string) {
     const regex = /^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/
@@ -74,23 +70,17 @@ function formatCardholderName(name: string) {
 export async function getAllCards(userId: number) {
     const cards = await cardRepository.findByUserId(userId)
     const treatedCards = cards.map(c => {
-        c.password = decryptString(c.password);
-        c.securityCode = decryptString(c.securityCode);
+        c.password = cryptrUtils.decryptString(c.password);
+        c.securityCode = cryptrUtils.decryptString(c.securityCode);
         return c
     })
     return treatedCards
 }
 
-function decryptString(password: string): string {
-    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
-    const cryptr = new Cryptr(cryptrKey);
-    return cryptr.decrypt(password)
-}
-
 export async function getOneCard(cardId: number, userId: number) {
     const card = await userCardExists(cardId, userId)
-    card.password = decryptString(card.password);
-    card.securityCode = decryptString(card.securityCode);
+    card.password = cryptrUtils.decryptString(card.password);
+    card.securityCode = cryptrUtils.decryptString(card.securityCode);
     return card
 }
 

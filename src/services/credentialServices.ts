@@ -1,13 +1,13 @@
-import { TCredentialBody, TCredentialReturnDB } from "../typeModels/credentialInterfaces";
+import { TCredentialBody, TCredentialReturnDB } from "../typeModels/credentialTypes";
 import * as userService from "./authServices";
 import * as credentialRepository from '../repositories/credentialRepository'
-import Cryptr from "cryptr";
+import cryptrUtils from '../utils/cryptrUtils'
 
-export async function newCredential (credential:TCredentialBody,userId:number) {
+export async function addNewCredential (credential:TCredentialBody,userId:number) {
     await userService.verifyUserExists(userId)
     await verifyTitleInUse(credential.title,userId)
     const treatedCredential = {...credential,userId}
-    treatedCredential.password = encryptPassword(treatedCredential.password)
+    treatedCredential.password = cryptrUtils.encryptString(treatedCredential.password)
     await credentialRepository.insert(treatedCredential)
 }
 
@@ -18,31 +18,18 @@ async function verifyTitleInUse (title:string,userId:number) {
     }
 }
 
-function encryptPassword (password:string):string {
-    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
-    const cryptr = new Cryptr(cryptrKey);
-    return cryptr.encrypt(password)
-}
-
 export async function getAllCredentials (userId:number) {
     const credentials = await credentialRepository.findByUserId(userId)
     const treatedCredentials = credentials.map(c=>{
-        c.password = decryptPassword(c.password)
+        c.password = cryptrUtils.decryptString(c.password)
         return c
     })
     return treatedCredentials
 }
 
-
-function decryptPassword (password:string):string {
-    const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
-    const cryptr = new Cryptr(cryptrKey);
-    return cryptr.decrypt(password)
-}
-
 export async function getOneCredential (credentialId:number,userId:number) {
     const credential = await userCredentialExists(credentialId, userId)
-    credential.password = decryptPassword(credential.password)
+    credential.password = cryptrUtils.decryptString(credential.password)
     return credential
 }
 

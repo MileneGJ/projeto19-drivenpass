@@ -1,8 +1,8 @@
-import { TAnnotationBody } from "../typeModels/annotationInterfaces";
+import { TAnnotationBody } from "../typeModels/annotationTypes";
 import * as userService from '../services/authServices'
 import * as annotationRepository from '../repositories/annotationRepository'
 
-export async function newAnnotation (annotation:TAnnotationBody, userId:number) {
+export async function addNewAnnotation (annotation:TAnnotationBody, userId:number) {
     await userService.verifyUserExists(userId);
     await verifyTitleInUse(annotation.title,userId);
     validateContent(annotation);

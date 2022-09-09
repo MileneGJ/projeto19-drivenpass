@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { TNewUserBody, INewUserDB } from "../typeModels/authInterfaces";
+import { TNewUserBody, INewUserDB } from "../typeModels/authTypes";
 
 export async function insert (userData:TNewUserBody) {
     await prisma.users.create({data:{

@@ -1,4 +1,4 @@
-import { TLoginBody, TNewUserBody, INewUserDB } from "../typeModels/authInterfaces";
+import { TLoginBody, TNewUserBody, INewUserDB } from "../typeModels/authTypes";
 import bcrypt from 'bcrypt';
 import * as userRepository from '../repositories/userRepository'
 import jwt from 'jsonwebtoken'

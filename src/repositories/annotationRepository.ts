@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { INewAnnotationDB, TAnnotationInsertToDB, TAnnotationReturnedDB } from "../typeModels/annotationInterfaces";
+import { INewAnnotationDB, TAnnotationInsertToDB, TAnnotationReturnedDB } from "../typeModels/annotationTypes";
 
 export async function findByUserId(userId:number):Promise<TAnnotationReturnedDB[]> {
     const annotations = await prisma.annotations.findMany({

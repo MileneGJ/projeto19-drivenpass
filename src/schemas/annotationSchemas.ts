@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { TAnnotationBody } from '../typeModels/annotationInterfaces';
+import { TAnnotationBody } from '../typeModels/annotationTypes';
 
 export const newAnnotationSchema = joi.object<TAnnotationBody>({
     title: joi.string().max(50).required(),
