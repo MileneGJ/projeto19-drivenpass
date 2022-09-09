@@ -48,33 +48,33 @@ function validateSecurityCode(secCode: string) {
     }
 }
 
-function validateExpirationDate(date:string){
+function validateExpirationDate(date: string) {
     dayjs.extend(customParseFormat)
-    const givenDate = dayjs(date,'MM/YY')
+    const givenDate = dayjs(date, 'MM/YY')
     const now = dayjs()
-    console.log([now,date,givenDate])
-    if(givenDate<now) {
-        throw {code: 'InvalidInput', message: 'Expiration date can not be a date in the past'}
+    console.log([now, date, givenDate])
+    if (givenDate < now) {
+        throw { code: 'InvalidInput', message: 'Expiration date can not be a date in the past' }
     }
 }
 
-function formatCardholderName(name:string) {
+function formatCardholderName(name: string) {
     const separateNames = name.split(" ")
     const regex = /^d[aeiou]{1}s?$/
     let formattedName = []
     for (let i = 0; i < separateNames.length; i++) {
         if (i === 0 || i === separateNames.length - 1) {
             formattedName.push(separateNames[i].toUpperCase())
-        } else if (!regex.test(separateNames[i].toLowerCase())&&separateNames[i]!=="e") {
+        } else if (!regex.test(separateNames[i].toLowerCase()) && separateNames[i] !== "e") {
             formattedName.push(separateNames[i][0].toUpperCase())
         }
     }
     return formattedName.join(" ")
 }
 
-export async function getAllCards (userId:number) {
+export async function getAllCards(userId: number) {
     const cards = await cardRepository.findByUserId(userId)
-    const treatedCards = cards.map(c=>{
+    const treatedCards = cards.map(c => {
         c.password = decryptString(c.password);
         c.securityCode = decryptString(c.securityCode);
         return c
@@ -86,4 +86,11 @@ function decryptString(password: string): string {
     const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
     const cryptr = new Cryptr(cryptrKey);
     return cryptr.decrypt(password)
+}
+
+export async function getOneCard(cardId: number, userId: number) {
+    const card = await cardRepository.findByIdAndUserId(cardId, userId)
+    card.password = decryptString(card.password);
+    card.securityCode = decryptString(card.securityCode);
+    return card
 }

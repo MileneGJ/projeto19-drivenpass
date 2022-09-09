@@ -12,3 +12,10 @@ export async function getAllCards (req: Request, res: Response) {
     const cards = await cardService.getAllCards(userId)
     res.status(200).send(cards)
 }
+
+export async function getOneCard(req: Request, res: Response) {
+    const {userId} = res.locals
+    const {cardId} = req.params
+    const card = await cardService.getOneCard(Number(cardId),userId)
+    res.status(200).send(card)
+}

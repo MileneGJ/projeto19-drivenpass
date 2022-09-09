@@ -12,6 +12,17 @@ export async function findByIdAndUserId (id:number, userId:number):Promise<ICard
                 {id},
                 {userId}
             ]
+        },
+        select:{
+            id:true,
+            title:true,
+            number:true,
+            cardholderName:true,
+            securityCode:true,
+            expirationDate:true,
+            password:true,
+            isVirtual:true,
+            type:true
         }
     })
     return card as ICardDB
