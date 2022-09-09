@@ -31,6 +31,7 @@
     - [Secure notes](#secure-notes)
     - [Cards](#cards)
     - [Wifi networks](#wifi-networks)
+    - [Documents](#documents)
 
 <!-- Getting Started -->
 
@@ -56,7 +57,7 @@ Finally, start the server:
 npm start
 ```
 
-You can now access the API's endpoints by navigating to `http://localhost:5000/`
+You can now access the API's endpoints by navigating to `http://localhost:5000/` or the deployed version on `https://drivenpass-backend.herokuapp.com/`
 
 <!-- Database -->
 
@@ -107,6 +108,14 @@ In this section, you will find the API's endpoints and their descriptions, along
 - [Get a wifi](#---get-a-wifi)
 - [Delete a wifi](#---delete-a-wifi)
 
+### [Documents](#documents) _`/documents`_
+
+- [Insert a document](#---insert-a-document)
+- [List your documents](#---list-your-documents)
+- [Get a document](#---get-a-document)
+- [Delete a document](#---delete-a-document)
+
+
 
 ## Authentication
 
@@ -114,7 +123,7 @@ In this section, you will find the API's endpoints and their descriptions, along
 
 ###### POST _`/signup`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -133,7 +142,8 @@ In this section, you will find the API's endpoints and their descriptions, along
 }
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -143,11 +153,12 @@ In this section, you will find the API's endpoints and their descriptions, along
 |   **500**   | Internal Server Error | `error: { message }` |
 
 
+
 ### Login with created account
 
 ###### POST _`/signin`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -166,7 +177,8 @@ In this section, you will find the API's endpoints and their descriptions, along
 }
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -177,13 +189,14 @@ In this section, you will find the API's endpoints and their descriptions, along
 
 
 
+
 ## Credentials
 
 ### Insert a credential
 
 ###### POST _`/credentials`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -206,7 +219,7 @@ In this section, you will find the API's endpoints and their descriptions, along
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -218,11 +231,12 @@ In this section, you will find the API's endpoints and their descriptions, along
 |   **500**   | Internal Server Error | `error: { message }` |
 
 
+
 ### List your credentials
 
 ###### GET _`/credentials`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -234,7 +248,7 @@ In this section, you will find the API's endpoints and their descriptions, along
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -266,11 +280,12 @@ Obs.: credentialArray will return the following structure:
 ]
 ```
 
+
 ### Get a credential
 
 ###### GET _`/credentials/:credentialId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -287,7 +302,7 @@ Obs.: credentialArray will return the following structure:
 credentialId:1
 ```
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -310,11 +325,12 @@ Obs.: credentialObj will return the following structure:
 
 ```
 
+
 ### Delete a credential
 
 ###### DELETE _`/credentials/:credentialId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -331,7 +347,8 @@ Obs.: credentialObj will return the following structure:
 credentialId:1
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -344,13 +361,14 @@ credentialId:1
 
 
 
+
 ## Secure Notes
 
 ### Insert an annotation
 
 ###### POST _`/annotations`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -371,7 +389,7 @@ credentialId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -383,11 +401,12 @@ credentialId:1
 |   **500**   | Internal Server Error | `error: { message }` |
 
 
+
 ### List your annotations
 
 ###### GET _`/annotations`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -399,7 +418,7 @@ credentialId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -427,11 +446,12 @@ Obs.: annotationArray will return the following structure:
 ]
 ```
 
+
 ### Get an annotation
 
 ###### GET _`/annotations/:annotationId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -448,7 +468,8 @@ Obs.: annotationArray will return the following structure:
 annotationId:1
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -469,11 +490,12 @@ Obs.: annotationObj will return the following structure:
 
 ```
 
+
 ### Delete an annotation
 
 ###### DELETE _`/annotations/:annotationId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -490,7 +512,8 @@ Obs.: annotationObj will return the following structure:
 annotationId:1
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -503,13 +526,14 @@ annotationId:1
 
 
 
+
 ## Cards
 
 ### Insert a card
 
 ###### POST _`/cards`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -536,7 +560,7 @@ annotationId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -548,11 +572,12 @@ annotationId:1
 |   **500**   | Internal Server Error | `error: { message }` |
 
 
+
 ### List your cards
 
 ###### GET _`/cards`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -564,7 +589,7 @@ annotationId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -604,11 +629,12 @@ Obs.: cardArray will return the following structure:
 ]
 ```
 
+
 ### Get a card
 
 ###### GET _`/cards/:cardId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -625,7 +651,8 @@ Obs.: cardArray will return the following structure:
 cardId:1
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -652,11 +679,12 @@ Obs.: cardObj will return the following structure:
 
 ```
 
+
 ### Delete a card
 
 ###### DELETE _`/cards/:cardId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -673,7 +701,7 @@ Obs.: cardObj will return the following structure:
 cardId:1
 ```
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -686,13 +714,14 @@ cardId:1
 
 
 
+
 ## Wifi networks
 
 ### Insert a wifi
 
 ###### POST _`/wifis`_
 
-### Request
+#### Request
 
 ###### Body
 
@@ -714,7 +743,7 @@ cardId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |      Properties      |
 | :---------: | :-------------------: | :------------------: |
@@ -726,11 +755,12 @@ cardId:1
 |   **500**   | Internal Server Error | `error: { message }` |
 
 
+
 ### List your wifis
 
 ###### GET _`/wifis`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -742,7 +772,7 @@ cardId:1
 ```
 
 
-### Responses
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -772,11 +802,12 @@ Obs.: wifiArray will return the following structure:
 ]
 ```
 
+
 ### Get a wifi
 
 ###### GET _`/wifis/:wifiId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -793,7 +824,8 @@ Obs.: wifiArray will return the following structure:
 wifiId:1
 ```
 
-### Responses
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
@@ -815,11 +847,12 @@ Obs.: wifiObj will return the following structure:
 
 ```
 
+
 ### Delete an wifi
 
 ###### DELETE _`/wifis/:wifiId`_
 
-### Request
+#### Request
 
 ###### Headers
 
@@ -836,7 +869,189 @@ Obs.: wifiObj will return the following structure:
 wifiId:1
 ```
 
-### Responses
+
+#### Responses
+
+| Status Code |      Description      |        Properties       |
+| :---------: | :-------------------: |   :------------------:  |
+|   **204**   |       No Content      |        `data: {}`       |
+|   **401**   |      Unauthorized     |   `error: { message }`  |
+|   **404**   |       Not Found       |   `error: { message }`  |
+|   **409**   |       Conflict        |   `error: { message }`  |
+|   **422**   |     Invalid Input     |   `error: { message }`  |
+|   **500**   | Internal Server Error |   `error: { message }`  |
+
+
+
+
+## Documents
+
+### Insert a document
+
+###### POST _`/documents`_
+
+#### Request
+
+###### Body
+
+```json
+{
+    "type": "RG",
+    "number":"00000000-0",
+    "fullName": "John Smith da Silva",
+    "emissionDate": "01/01/2020",
+    "expirationDate":"01/01/2030",
+    "emissionInstitution":"SSP"
+}
+```
+
+###### Headers
+
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer my-token"
+}
+```
+
+
+#### Responses
+
+| Status Code |      Description      |      Properties      |
+| :---------: | :-------------------: | :------------------: |
+|   **201**   |        Created        |      `data: {}`      |
+|   **401**   |      Unauthorized     | `error: { message }` |
+|   **404**   |       Not Found       | `error: { message }` |
+|   **409**   |       Conflict        | `error: { message }` |
+|   **422**   |     Invalid Input     | `error: { message }` |
+|   **500**   | Internal Server Error | `error: { message }` |
+
+
+
+### List your documents
+
+###### GET _`/documents`_
+
+#### Request
+
+###### Headers
+
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer my-token"
+}
+```
+
+
+#### Responses
+
+| Status Code |      Description      |        Properties       |
+| :---------: | :-------------------: |   :------------------:  |
+|   **200**   |           OK          | `data: {documentArray}` |
+|   **401**   |      Unauthorized     |   `error: { message }`  |
+|   **404**   |       Not Found       |   `error: { message }`  |
+|   **409**   |       Conflict        |   `error: { message }`  |
+|   **422**   |     Invalid Input     |   `error: { message }`  |
+|   **500**   | Internal Server Error |   `error: { message }`  |
+
+Obs.: documentArray will return the following structure:
+```json
+[   
+    {
+        "id":1,
+        "type": "RG",
+        "number":"00000000-0",
+        "fullName": "John Smith da Silva",
+        "emissionDate": "01/01/2020",
+        "expirationDate":"01/01/2030",
+        "emissionInstitution":"SSP"
+    }
+    ,
+    {
+        "id":2,
+        "type": "CNH",
+        "number":"00000000000000",
+        "fullName": "John Smith da Silva",
+        "emissionDate": "01/01/2020",
+        "expirationDate":"01/01/2030",
+        "emissionInstitution":"SSP"
+    }
+]
+```
+
+
+### Get a document
+
+###### GET _`/documents/:documentId`_
+
+#### Request
+
+###### Headers
+
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer my-token"
+}
+```
+
+###### Params
+
+```
+documentId:1
+```
+
+
+#### Responses
+
+| Status Code |      Description      |        Properties       |
+| :---------: | :-------------------: |   :------------------:  |
+|   **200**   |           OK          |    `data: {documentObj}`    |
+|   **401**   |      Unauthorized     |   `error: { message }`  |
+|   **404**   |       Not Found       |   `error: { message }`  |
+|   **409**   |       Conflict        |   `error: { message }`  |
+|   **422**   |     Invalid Input     |   `error: { message }`  |
+|   **500**   | Internal Server Error |   `error: { message }`  |
+
+Obs.: documentObj will return the following structure:
+```json
+{
+    "id":1,
+    "type": "RG",
+    "number":"00000000-0",
+    "fullName": "John Smith da Silva",
+    "emissionDate": "01/01/2020",
+    "expirationDate":"01/01/2030",
+    "emissionInstitution":"SSP"
+}
+
+```
+
+
+### Delete an document
+
+###### DELETE _`/documents/:documentId`_
+
+#### Request
+
+###### Headers
+
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer my-token"
+}
+```
+
+###### Params
+
+```
+documentId:1
+```
+
+
+#### Responses
 
 | Status Code |      Description      |        Properties       |
 | :---------: | :-------------------: |   :------------------:  |
