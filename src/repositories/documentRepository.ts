@@ -18,8 +18,8 @@ export async function findByUserId (userId:number):Promise<TDocumentReturnDB[]> 
     return documents
 }
 
-export async function findByIdandUserId (id:number, userId:number) {
-    const document = await prisma.documents.findMany({
+export async function findByIdandUserId (id:number, userId:number):Promise<TDocumentReturnDB> {
+    const document = await prisma.documents.findFirst({
         where:{
             AND:[
                 {id},
@@ -35,7 +35,7 @@ export async function findByIdandUserId (id:number, userId:number) {
             emissionInstitution: true
         }
     })
-    return document
+    return document as TDocumentReturnDB
 }
 
 export async function insert(document:TDocumentInsertDB) {

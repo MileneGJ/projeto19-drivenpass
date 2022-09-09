@@ -16,4 +16,6 @@ export async function getAllDocuments (req: Request, res:Response) {
 export async function getOneDocument (req: Request, res:Response) {
     const {userId} = res.locals
     const {documentId} = req.params
+    const document = await documentService.getOneDocument(Number(documentId),userId)
+    res.status(200).send(document)
 }

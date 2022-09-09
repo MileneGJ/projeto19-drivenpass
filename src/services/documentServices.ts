@@ -32,3 +32,8 @@ export async function getAllDocuments (userId:number) {
     const documents = await documentRepository.findByUserId(userId)
     return documents
 }
+
+export async function getOneDocument (documentId:number, userId:number) {
+    const document = await documentRepository.findByIdandUserId(documentId,userId)
+    return document
+}
