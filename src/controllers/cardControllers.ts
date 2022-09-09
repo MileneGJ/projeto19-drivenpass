@@ -19,3 +19,10 @@ export async function getOneCard(req: Request, res: Response) {
     const card = await cardService.getOneCard(Number(cardId),userId)
     res.status(200).send(card)
 }
+
+export async function deleteOneCard (req: Request, res: Response) {
+    const {userId} = res.locals
+    const {cardId} = req.params
+    await cardService.deleteCard(Number(cardId),userId)
+    res.sendStatus(204)
+}

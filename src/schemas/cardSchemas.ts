@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import JoiDateFactory from '@joi/date';
+import { TCardBody } from '../typeModels/cardInterfaces';
 
 const joi = Joi.extend(JoiDateFactory)
 
@@ -10,6 +11,6 @@ export const newCardSchema = joi.object({
     securityCode:joi.string().length(3).required(),
     expirationDate:joi.date().format('MM/YY').required(),
     password:joi.string().min(4).required(),
-    isVirtual:joi.boolean().required(),
+    isVirtual:joi.boolean().strict().required(),
     type:joi.string().valid('credit','debit','both').required()
 })

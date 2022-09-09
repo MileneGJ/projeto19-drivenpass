@@ -35,9 +35,9 @@ function encryptString(password: string): string {
 }
 
 function validateCardNumber(number: string) {
-    const regex = /^[0-9]{16}$/
+    const regex = /^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/
     if (!regex.test(number)) {
-        throw { code: 'InvalidInput', message: 'Card number can not contain separators' }
+        throw { code: 'InvalidInput', message: 'Card number must contain "-" separators' }
     }
 }
 
@@ -52,7 +52,6 @@ function validateExpirationDate(date: string) {
     dayjs.extend(customParseFormat)
     const givenDate = dayjs(date, 'MM/YY')
     const now = dayjs()
-    console.log([now, date, givenDate])
     if (givenDate < now) {
         throw { code: 'InvalidInput', message: 'Expiration date can not be a date in the past' }
     }
@@ -89,8 +88,21 @@ function decryptString(password: string): string {
 }
 
 export async function getOneCard(cardId: number, userId: number) {
-    const card = await cardRepository.findByIdAndUserId(cardId, userId)
+    const card = await userCardExists(cardId, userId)
     card.password = decryptString(card.password);
     card.securityCode = decryptString(card.securityCode);
     return card
+}
+
+async function userCardExists(cardId: number, userId: number) {
+    const card = await cardRepository.findByIdAndUserId(cardId,userId)
+    if(!card){
+        throw {code:'NotFound', message:'No cards were found with given id'}
+    }
+    return card
+}
+
+export async function deleteCard(cardId: number, userId: number) {
+    await userCardExists(cardId, userId)
+    await cardRepository.deleteOne(cardId)
 }

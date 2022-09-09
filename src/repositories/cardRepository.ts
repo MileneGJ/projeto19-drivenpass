@@ -1,10 +1,6 @@
 import prisma from "../database/database";
 import { ICardDB, TCardInsertToDB, TCardReturnDB } from "../typeModels/cardInterfaces";
 
-export async function insert (card:TCardInsertToDB) {
-    await prisma.cards.create({data:{...card}})
-}
-
 export async function findByIdAndUserId (id:number, userId:number):Promise<ICardDB> {
     const card = await prisma.cards.findFirst({
         where:{
@@ -55,4 +51,12 @@ export async function findByUserId (userId:number):Promise<TCardReturnDB[]> {
             type:true
         }})
     return cards
+}
+
+export async function insert (card:TCardInsertToDB) {
+    await prisma.cards.create({data:{...card}})
+}
+
+export async function deleteOne (id:number) {
+    await prisma.cards.delete({where:{id}})
 }

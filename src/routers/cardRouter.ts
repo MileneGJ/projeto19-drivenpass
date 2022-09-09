@@ -9,5 +9,6 @@ const cardRouter = Router()
 cardRouter.post('/cards',tokenValidation,validateSchema(newCardSchema),cardController.createCard)
 cardRouter.get('/cards',tokenValidation,cardController.getAllCards)
 cardRouter.get('/cards/:cardId',tokenValidation,cardController.getOneCard)
+cardRouter.delete('/cards/:cardId',tokenValidation,cardController.deleteOneCard)
 
 export default cardRouter
