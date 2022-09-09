@@ -32,3 +32,8 @@ async function userWifiExists (wifiId:number, userId:number) {
     }
     return wifi
 }
+
+export async function deleteWifi (wifiId:number, userId:number) {
+    await userWifiExists(wifiId,userId)
+    await wifiRepository.deleteOne(wifiId)
+}
