@@ -2,15 +2,14 @@ import { TCardBody } from "../typeModels/cardTypes";
 import * as cardRepository from '../repositories/cardRepository'
 import * as userService from '../services/authServices'
 import cryptrUtils from '../utils/cryptrUtils'
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjsUtils from "../utils/dayjsUtils";
 
 export async function addNewCard(card: TCardBody, userId: number) {
     await userService.verifyUserExists(userId)
     await verifyTitleInUse(card.title, userId)
 
     validateCardNumber(card.number)
-    validateExpirationDate(card.expirationDate)
+    dayjsUtils.validateExpirationDate(card.expirationDate,'MM/YY')
     validateSecurityCode(card.securityCode)
 
     const treatedCard = { ...card, userId }
@@ -28,8 +27,6 @@ async function verifyTitleInUse(title: string, userId: number) {
     }
 }
 
-
-
 function validateCardNumber(number: string) {
     const regex = /^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/
     if (!regex.test(number)) {
@@ -41,15 +38,6 @@ function validateSecurityCode(secCode: string) {
     const regex = /^[0-9]{3}$/
     if (!regex.test(secCode)) {
         throw { code: 'InvalidInput', message: 'Invalid card security code' }
-    }
-}
-
-function validateExpirationDate(date: string) {
-    dayjs.extend(customParseFormat)
-    const givenDate = dayjs(date, 'MM/YY')
-    const now = dayjs()
-    if (givenDate < now) {
-        throw { code: 'InvalidInput', message: 'Expiration date can not be a date in the past' }
     }
 }
 

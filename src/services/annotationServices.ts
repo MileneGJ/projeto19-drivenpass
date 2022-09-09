@@ -5,13 +5,10 @@ import * as annotationRepository from '../repositories/annotationRepository'
 export async function addNewAnnotation (annotation:TAnnotationBody, userId:number) {
     await userService.verifyUserExists(userId);
     await verifyTitleInUse(annotation.title,userId);
+
     validateContent(annotation);
-    const treatedAnnotation = {
-        title:annotation.title,
-        text:annotation.text,
-        userId
-    }
-    await annotationRepository.insert(treatedAnnotation)
+    
+    await annotationRepository.insert({...annotation,userId})
 }
 
 async function verifyTitleInUse (title:string,userId:number) {

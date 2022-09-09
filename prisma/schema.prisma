@@ -19,6 +19,7 @@ model Users {
   annotations Annotations[]
   cards       Cards[]
   wifis       Wifis[]
+  documents   Documents[]
 }
 
 model Credentials {
@@ -27,22 +28,22 @@ model Credentials {
   url       String
   username  String
   password  String
-  user      Users     @relation(fields: [userId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id])
   userId    Int
   createdAt DateTime @default(now())
 
-  @@unique([title,userId])
+  @@unique([title, userId])
 }
 
 model Annotations {
   id        Int      @id @default(autoincrement())
   title     String
   text      String
-  user      Users     @relation(fields: [userId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id])
   userId    Int
   createdAt DateTime @default(now())
 
-  @@unique([title,userId])
+  @@unique([title, userId])
 }
 
 model Cards {
@@ -54,15 +55,15 @@ model Cards {
   expirationDate String
   password       String
   isVirtual      Boolean
-  type           Type
-  user           Users     @relation(fields: [userId], references: [id])
+  type           CardType
+  user           Users    @relation(fields: [userId], references: [id])
   userId         Int
   createdAt      DateTime @default(now())
 
-  @@unique([title,userId])
+  @@unique([title, userId])
 }
 
-enum Type {
+enum CardType {
   credit
   debit
   both
@@ -73,7 +74,25 @@ model Wifis {
   title     String
   name      String
   password  String
-  user      Users @relation(fields:[userId],references:[id])
-  userId    Int 
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    Int
   createdAt DateTime @default(now())
+}
+
+model Documents {
+  id                  Int      @id @default(autoincrement())
+  type                DocType
+  number              String
+  fullName            String
+  emissionDate        String
+  expirationDate      String
+  emissionInstitution String
+  user                Users    @relation(fields: [userId], references: [id])
+  userId              Int
+  createdAt           DateTime @default(now())
+}
+
+enum DocType {
+  CNH
+  RG
 }
