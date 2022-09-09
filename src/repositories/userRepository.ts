@@ -3,7 +3,6 @@ import { TNewUserBody, INewUserDB } from "../typeModels/authTypes";
 
 export async function insert (userData:TNewUserBody) {
     await prisma.users.create({data:{
-        name:userData.name,
         email:userData.email,
         password:userData.password as string
     }})
