@@ -10,8 +10,8 @@ export async function insert (userData:TNewUserBody) {
 }
 
 export async function findByEmail (email:string):Promise<INewUserDB> {
-    const user = await prisma.users.findMany({where:{email}})
-    return user[0]
+    const user = await prisma.users.findFirst({where:{email}})
+    return user as INewUserDB
 }
 
 export async function findById (id:number):Promise<INewUserDB> {

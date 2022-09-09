@@ -33,27 +33,17 @@ function validateContent(annotation:TAnnotationBody) {
 
 export async function getAllAnnotations (userId:number) {
     const annotations = await annotationRepository.findByUserId(userId)
-    const treatedAnnotations = annotations.map(a=>({
-        id:a.id,
-        title:a.title,
-        text:a.text
-    }))
-    return treatedAnnotations
+    return annotations
 }
 
 export async function getOneAnnotation (annotationId:number,userId:number) {
     const annotation = await userAnnotationExists(annotationId, userId)
-    const treatedAnnotation = {
-        id:annotation.id,
-        title:annotation.title,
-        text:annotation.text
-    }
-    return treatedAnnotation
+    return annotation
 }
 
 async function userAnnotationExists (annotationId:number, userId:number) {
-    const annotation = await annotationRepository.findById(annotationId)
-    if(!annotation || annotation.userId !== userId){
+    const annotation = await annotationRepository.findByIdAndUserId(annotationId,userId)
+    if(!annotation){
         throw {code:'NotFound', message:'No annotations were found with given id'}
     }
     return annotation

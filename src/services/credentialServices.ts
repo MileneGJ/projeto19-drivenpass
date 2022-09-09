@@ -62,8 +62,8 @@ export async function getOneCredential (credentialId:number,userId:number) {
 }
 
 async function userCredentialExists (credentialId:number, userId:number) {
-    const credential = await credentialRepository.findById(credentialId)
-    if(!credential || credential.userId !== userId){
+    const credential = await credentialRepository.findByIdAndUserId(credentialId,userId)
+    if(!credential){
         throw {code:'NotFound', message:'No credentials were found with given id'}
     }
     return credential

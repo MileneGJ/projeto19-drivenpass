@@ -6,8 +6,14 @@ export async function findByUserId (userId:number):Promise<ICredentialDB[]> {
     return credentials
 }
 
-export async function findById (id:number):Promise<ICredentialDB> {
-    const credential = await prisma.credentials.findUnique({where:{id}})
+export async function findByIdAndUserId (id:number,userId:number):Promise<ICredentialDB> {
+    const credential = await prisma.credentials.findFirst({
+        where:{
+            AND:[
+                {id},
+                {userId}
+            ]
+        }})
     return credential as ICredentialDB
 }
 

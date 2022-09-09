@@ -9,3 +9,5 @@ export interface INewAnnotationDB {
 export type TAnnotationBody = Omit<INewAnnotationDB,'id'|'userId'|'createdAt'>
 
 export type TAnnotationInsertToDB = Omit<INewAnnotationDB, 'id'|'createdAt'>
+
+export type TAnnotationReturnedDB = Omit<INewAnnotationDB, 'createdAt'|"userId">
