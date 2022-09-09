@@ -8,5 +8,6 @@ const wifiRouter = Router()
 
 wifiRouter.post('/wifis',tokenValidation,validateSchema(newWifiSchema),wifiController.createWifi)
 wifiRouter.get('/wifis',tokenValidation,wifiController.getAllWifis)
+wifiRouter.get('/wifis/:wifiId',tokenValidation,wifiController.getOneWifi)
 
 export default wifiRouter

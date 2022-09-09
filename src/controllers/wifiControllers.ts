@@ -12,3 +12,10 @@ export async function getAllWifis (req: Request, res: Response) {
     const wifis = await wifiService.getAllWifis(userId)
     res.status(200).send(wifis)
 }
+
+export async function getOneWifi (req: Request, res: Response) {
+    const {userId} = res.locals
+    const {wifiId} = req.params
+    const wifi = await wifiService.getOneWifi(Number(wifiId),userId)
+    res.status(200).send(wifi)
+}

@@ -18,3 +18,17 @@ export async function getAllWifis(userId:number) {
     })
     return treatedWifis
 }
+
+export async function getOneWifi(wifiId:number, userId:number) {
+    const wifi = await userWifiExists(wifiId,userId)
+    wifi.password = cryptrUtils.decryptString(wifi.password)
+    return wifi
+}
+
+async function userWifiExists (wifiId:number, userId:number) {
+    const wifi = await wifiRepository.findByIdAndUserId(wifiId,userId)
+    if(!wifi){
+        throw {code:'NotFound', message:'No wifi networks were found with given id'}
+    }
+    return wifi
+}
