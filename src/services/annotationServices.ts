@@ -15,9 +15,8 @@ export async function newAnnotation (annotation:TAnnotationBody, userId:number) 
 }
 
 async function verifyTitleInUse (title:string,userId:number) {
-    const userAnnotations = await annotationRepository.findByUserId(userId)
-    const titleAnnotations = userAnnotations.map(c=>c.title)
-    if(titleAnnotations.includes(title)){
+    const userAnnotationMatch = await annotationRepository.findByTitleAndUserId(title,userId)
+    if(userAnnotationMatch){
         throw {code:'Conflict', message: 'An annotation with the given title already exists for this user'}
     }
 }

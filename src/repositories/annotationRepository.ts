@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { INewAnnotationDB, TAnnotationBody, TAnnotationInsertToDB, TAnnotationReturnedDB } from "../typeModels/annotationInterfaces";
+import { INewAnnotationDB, TAnnotationInsertToDB, TAnnotationReturnedDB } from "../typeModels/annotationInterfaces";
 
 export async function findByUserId(userId:number):Promise<TAnnotationReturnedDB[]> {
     const annotations = await prisma.annotations.findMany({
@@ -17,11 +17,9 @@ export async function findByIdAndUserId (id:number,userId:number):Promise<INewAn
     const credential = await prisma.annotations.findFirst({
         where:{
             AND: [
-                {
-                    id
-                }, {
-                    userId
-                }]
+                {id}, 
+                {userId}
+            ]
         },
         select:{
             id:true,
@@ -32,12 +30,20 @@ export async function findByIdAndUserId (id:number,userId:number):Promise<INewAn
     return credential as INewAnnotationDB
 }
 
+export async function findByTitleAndUserId (title:string,userId:number):Promise<INewAnnotationDB> {
+    const credential = await prisma.annotations.findFirst({
+        where:{
+            AND: [
+                {title}, 
+                {userId}
+            ]
+        }
+    })
+    return credential as INewAnnotationDB
+}
+
 export async function insert (annotation:TAnnotationInsertToDB){
-    await prisma.annotations.create({data:{
-        title:annotation.title,
-        text:annotation.text,
-        userId:annotation.userId
-    }})
+    await prisma.annotations.create({data:{...annotation}})
 }
 
 export async function deleteOne (id:number) {

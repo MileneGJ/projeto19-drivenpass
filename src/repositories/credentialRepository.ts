@@ -1,16 +1,44 @@
 import prisma from "../database/database";
-import { ICredentialDB, TCredentialInsertToDB } from "../typeModels/credentialInterfaces";
+import { ICredentialDB, TCredentialInsertToDB, TCredentialReturnDB } from "../typeModels/credentialInterfaces";
 
-export async function findByUserId (userId:number):Promise<ICredentialDB[]> {
-    const credentials = await prisma.credentials.findMany({where:{userId}})
+export async function findByUserId (userId:number):Promise<TCredentialReturnDB[]> {
+    const credentials = await prisma.credentials.findMany({
+        where:{userId},
+        select:{
+            id:true,
+            title:true,
+            url:true,
+            username:true,
+            password:true
+        }
+    })
     return credentials
 }
 
-export async function findByIdAndUserId (id:number,userId:number):Promise<ICredentialDB> {
+export async function findByIdAndUserId (id:number,userId:number):Promise<TCredentialReturnDB> {
     const credential = await prisma.credentials.findFirst({
         where:{
             AND:[
                 {id},
+                {userId}
+            ]
+        },
+        select:{
+            id:true,
+            title:true,
+            url:true,
+            username:true,
+            password:true
+        }
+    })
+    return credential as TCredentialReturnDB
+}
+
+export async function findByTitleAndUserId (title:string,userId:number):Promise<ICredentialDB> {
+    const credential = await prisma.credentials.findFirst({
+        where:{
+            AND:[
+                {title},
                 {userId}
             ]
         }})
@@ -18,13 +46,7 @@ export async function findByIdAndUserId (id:number,userId:number):Promise<ICrede
 }
 
 export async function insert (newCredential:TCredentialInsertToDB){
-    await prisma.credentials.create({data:{
-        title:newCredential.title,
-        url:newCredential.url,
-        username:newCredential.username,
-        password:newCredential.password as string,
-        userId:newCredential.userId
-    }})
+    await prisma.credentials.create({data:{...newCredential}})
 }
 
 export async function deleteOne (id:number) {

@@ -1,4 +1,4 @@
-import { TCredentialBody } from "../typeModels/credentialInterfaces";
+import { TCredentialBody, TCredentialReturnDB } from "../typeModels/credentialInterfaces";
 import * as userService from "./authServices";
 import * as credentialRepository from '../repositories/credentialRepository'
 import Cryptr from "cryptr";
@@ -6,25 +6,19 @@ import Cryptr from "cryptr";
 export async function newCredential (credential:TCredentialBody,userId:number) {
     await userService.verifyUserExists(userId)
     await verifyTitleInUse(credential.title,userId)
-    const treatedCredential = {
-        title:credential.title,
-        url:credential.url,
-        username:credential.username,
-        password:encryptPassword(credential.password as string),
-        userId
-    }
+    const treatedCredential = {...credential,userId}
+    treatedCredential.password = encryptPassword(treatedCredential.password)
     await credentialRepository.insert(treatedCredential)
 }
 
 async function verifyTitleInUse (title:string,userId:number) {
-    const userCredentials = await credentialRepository.findByUserId(userId)
-    const titleCredentials = userCredentials.map(c=>c.title)
-    if(titleCredentials.includes(title)){
+    const userCredentialMatch = await credentialRepository.findByTitleAndUserId(title,userId)
+    if(userCredentialMatch){
         throw {code:'Conflict', message: 'A credential with the given title already exists for this user'}
     }
 }
 
-function encryptPassword (password:string) {
+function encryptPassword (password:string):string {
     const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
     const cryptr = new Cryptr(cryptrKey);
     return cryptr.encrypt(password)
@@ -32,18 +26,14 @@ function encryptPassword (password:string) {
 
 export async function getAllCredentials (userId:number) {
     const credentials = await credentialRepository.findByUserId(userId)
-    const treatedCredentials = credentials.map(c=>({
-        id:c.id,
-        title:c.title,
-        url:c.url,
-        username:c.username,
-        password:decryptPassword(c.password as string)
-    }))
+    const treatedCredentials = credentials.map(c=>{
+        c.password = decryptPassword(c.password)
+    })
     return treatedCredentials
 }
 
 
-function decryptPassword (password:string) {
+function decryptPassword (password:string):string {
     const cryptrKey = process.env.CRYPTR_KEY as string || 'secret'
     const cryptr = new Cryptr(cryptrKey);
     return cryptr.decrypt(password)
@@ -51,17 +41,11 @@ function decryptPassword (password:string) {
 
 export async function getOneCredential (credentialId:number,userId:number) {
     const credential = await userCredentialExists(credentialId, userId)
-    const treatedCredential = {
-        id:credential.id,
-        title:credential.title,
-        url:credential.url,
-        username:credential.username,
-        password:decryptPassword(credential.password as string)
-    }
-    return treatedCredential
+    credential.password = decryptPassword(credential.password)
+    return credential
 }
 
-async function userCredentialExists (credentialId:number, userId:number) {
+async function userCredentialExists (credentialId:number, userId:number):Promise<TCredentialReturnDB> {
     const credential = await credentialRepository.findByIdAndUserId(credentialId,userId)
     if(!credential){
         throw {code:'NotFound', message:'No credentials were found with given id'}
